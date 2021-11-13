@@ -15,11 +15,21 @@
      
     return dataset
 }
-
+let clearNode=(node)=>{
+    while (node.firstChild) {
+      node.removeChild(node.lastChild);
+    }
+  }
 document.getElementById("button_run").addEventListener("click",()=>{
-   dataFetchAsync(`http://localhost:5000/db`)
+    let parentNode=document.getElementById("client_list")
+    dataFetchAsync(`/db`)
    .then(data=>{
-       console.log(data)
+        clearNode(parentNode)
+       data.clients.forEach(elem => {
+        let element=document.createElement("p")
+            element.innerHTML=`${elem.name}\n`
+            parentNode.append(element)  
+       });
    })
    .catch(error=>{
        error.message
@@ -27,9 +37,14 @@ document.getElementById("button_run").addEventListener("click",()=>{
 })
 document.getElementById("button_run1").addEventListener("click",()=>{
     let value_id=document.getElementById("db_id").value
+    let parentNode=document.getElementById("client_list")
     console.log(value_id)
-    dataFetchAsync(`http://localhost:5000/db${value_id.toString()}`)
+    dataFetchAsync(`/db${value_id.toString()}`)
         .then(data=>{
+            clearNode(parentNode)
+            let element=document.createElement("p")
+            element.innerHTML=data.name
+            parentNode.append(element)
             console.log(data)
         })
 })
