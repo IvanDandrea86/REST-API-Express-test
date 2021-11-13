@@ -21,7 +21,7 @@ app.get(`/db:id`,(req,res)=>{
     fetch(`http://localhost:5000/db`)
         .then(response => response.json())
         .then(data=> {
-            var client=data.clients[id]
+            var client=data.clients[id-1]
             res.send(client)
 })
 })
