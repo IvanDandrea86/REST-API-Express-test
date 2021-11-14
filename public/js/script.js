@@ -45,11 +45,24 @@ document.getElementById("button_run1").addEventListener("click",()=>{
             let element=document.createElement("p")
             element.innerHTML=data.name
             parentNode.append(element)
-            console.log(data)
+            
         })
 })
 document.getElementById("button_run2").addEventListener("click",()=>{
-    fetch(`http://localhost:3000/`)
+    let value_id=document.getElementById("contact_id").value
+    let parentNode=document.getElementById("client_list")
+    
+    dataFetchAsync(`/contact${value_id.toString()}`)
+        .then(data=>{
+            clearNode(parentNode)
+            for (let elem in data){
+                let element=document.createElement("p")
+                console.log(data)
+                element.innerHTML=`${elem} ${data[elem]}`
+                parentNode.append(element)
+            }
+           
+        })
 })
 document.getElementById("button_run3").addEventListener("click",()=>{
     fetch(`http://localhost:3000/`)
